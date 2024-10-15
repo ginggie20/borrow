@@ -23,7 +23,8 @@ class Item extends Model
 
     public function Borrows()
     {
-        return $this->belongsToMany(Borrow::class, 'item_borrow');
+        return $this->belongsToMany(Borrow::class, 'item_borrows')
+            ->withPivot('borrow_state');
     }
 
     public function setStatItemAttribute($value)

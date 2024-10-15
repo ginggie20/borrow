@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('category_item_id')->constrained();
             $table->string('item_code')->unique();
             $table->string('item_name');
-            $table->boolean('item_state')->default('true');
+            $table->enum('item_state', ['available', 'unavailable'])->default('available');
             $table->timestamps();
         });
     }

@@ -7,13 +7,13 @@ use App\Models\CategoryItem;
 use App\Models\Item;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ItemResource extends Resource
 {
@@ -33,8 +33,6 @@ class ItemResource extends Resource
                     ->afterstateupdated(function ($state, callable $set) {
                         $set('item_code', ' ');
                     }),
-                Toggle::make('item_state')
-                    ->label('Item Status'),
             ]);
     }
 
@@ -47,10 +45,7 @@ class ItemResource extends Resource
                     ->label('Category'),
                 TextColumn::make('item_name')
                     ->sortable(),
-                IconColumn::make('item_state')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-check-badge')
-                    ->falseIcon('heroicon-o-x-mark'),
+                TextColumn::make('item_state'),
             ])
             ->filters([
                 //
@@ -61,6 +56,10 @@ class ItemResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->exports([
+                            ExcelExport::make('table')->fromTable(),
+                        ]),
                 ]),
             ]);
     }

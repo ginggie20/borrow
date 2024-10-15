@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('borrow_name');
             $table->date('borrow_start');
             $table->date('borrow_finish')->nullable();
-            $table->enum('borrow_status', [
-                'pending', 'active', 'finish',
-            ]);
+            // $table->enum('borrow_status', [
+            //     'pending', 'active', 'finish',
+            // ]);
             $table->timestamps();
         });
     }

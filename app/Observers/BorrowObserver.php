@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Borrow;
+use App\Models\Item;
 
 class BorrowObserver
 {
@@ -11,9 +12,8 @@ class BorrowObserver
      */
     public function created(Borrow $borrow): void
     {
-        foreach ($borrow->Items as $item) {
-            $item->update(['item_state' => 0]);
-        }
+        $itemIds = $borrow->items->pluck('id')->toArray();
+        Item::whereIn('id', $itemIds)->update(['item_state' => 0]);
     }
 
     /**
@@ -21,11 +21,11 @@ class BorrowObserver
      */
     public function updated(Borrow $borrow): void
     {
-        if ($borrow->borrow_status === 'finish') {
-            foreach ($borrow->Items as $item) {
-                $item->update(['item_state' => 1]);
-            }
-        }
+        // if ($borrow->borrow_status === 'finish') {
+        //     foreach ($borrow->Items as $item) {
+        //         $item->update(['item_state' => 1]);
+        //     }
+        // }
     }
 
     /**

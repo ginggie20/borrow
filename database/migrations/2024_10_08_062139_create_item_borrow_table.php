@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('item_borrow', function (Blueprint $table) {
+        Schema::create('item_borrows', function (Blueprint $table) {
             $table->id();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
             $table->foreignId('borrow_id')->constrained()->cascadeOnDelete();
+            $table->enum('borrow_state', [
+                'pending', 'active', 'finish', 'declined',
+            ])->default('pending');
             $table->timestamps();
         });
     }

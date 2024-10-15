@@ -19,23 +19,31 @@ class Borrow extends Model
 
     public function Items()
     {
-        return $this->belongsToMany(Item::class, 'item_borrow');
+        return $this->belongsToMany(Item::class, 'item_borrows')
+            ->withPivot('borrow_state');
     }
 
-    // public function setBorrowStatusAttribute($value)
-    // {
-    //     $this->attributes['borrow_status'] = $value;
-    //     if ($value === 'pending') {
-    //         $this->Item->update(['item_state' => 0]);
-    //     } elseif ($value === 'finish') {
-    //         $this->Item->update(['item_state' => 1]);
-    //     }
-    // }
-    // public static function booted()
-    // {
-    //     static::creating(function ($model) {
-    //         $model->borrow_status = 'pending';
+    public function itemBorrows()
+    {
+        return $this->hasMany(ItemBorrow::class);
+    }
 
-    //     });
-    // }
+    public function setBorrowStatusAttribute($value)
+    {
+        // // $this->attributes['borrow_status'] = $value;
+        // if ($value === 'pending') {
+        //     $this->Items->update(['item_state' => 0]);
+        // } elseif ($value === 'finish') {
+        //     $this->Items->update(['item_state' => 1]);
+        // }
+    }
+
+    public static function booted()
+    {
+        static::creating(function ($model) {
+            // $item = Item::find($model->item_id);
+            // $model->borrow_status = 'pending';
+            // $item->update(['item_state' => 'unavailable']);
+        });
+    }
 }
