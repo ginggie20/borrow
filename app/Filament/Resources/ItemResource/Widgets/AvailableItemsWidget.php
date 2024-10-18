@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ItemResource\Widgets;
 
+use App\Filament\Resources\BorrowResource\Pages;
 use App\Models\Item;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,6 +21,14 @@ class AvailableItemsWidget extends BaseWidget
                     ->searchable(),
                 Tables\Columns\TextColumn::make('item_name')
                     ->searchable(),
+
             ]);
+    }
+
+    public static function getPages()
+    {
+        return [
+            'createborrow' => Pages\createborrow::route('/create'),
+        ];
     }
 }

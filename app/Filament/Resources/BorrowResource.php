@@ -26,6 +26,8 @@ class BorrowResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $buttonLabel = 'Borrow';
+
     public static function form(Form $form): Form
     {
         return $form

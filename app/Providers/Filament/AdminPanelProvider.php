@@ -6,6 +6,7 @@ use App\Filament\Resources\ItemResource\Widgets\AvailableItemsWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -24,13 +25,20 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->brandLogo(asset('images/logo_smk.png'))
+            ->brandLogoHeight('100px')
+            ->topNavigation()
             ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('dashboard')
+            ->path('/dashboard')
             ->login()
+            ->profile()
+            ->registration()
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarFullyCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -40,6 +48,13 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 AvailableItemsWidget::class,
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Items'),
+                NavigationGroup::make()
+                    ->label('Users'),
+
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -54,6 +69,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ]);
     }
 }
