@@ -32,7 +32,10 @@ class BorrowResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('borrow_name'),
+                TextInput::make('borrow_name')
+                    ->default(fn () => auth()->user()->name)
+                    ->disabled()
+                    ->dehydrated(),
                 DatePicker::make('borrow_start')
                     ->format('d M Y')
                     ->default(now()),
