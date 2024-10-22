@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Listeners\VerifyListener;
 use App\Models\Borrow;
 use App\Models\ItemBorrow;
 use App\Observers\BorrowObserver;
 use App\Observers\ItemBorrowObserver;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,4 +27,10 @@ class AppServiceProvider extends ServiceProvider
         // Borrow::observe(BorrowObserver::class);
         ItemBorrow::observe(ItemBorrowObserver::class);
     }
+
+    protected $listen = [
+        Verified::class => [
+            VerifyListener::class,
+        ],
+    ];
 }

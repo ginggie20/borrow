@@ -8,6 +8,11 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 class CurrentMonthBorrowsWidget extends BaseWidget
 {
+    public static function canView(): bool
+    {
+        return auth()->user()->hasRole('super_admin');
+    }
+
     protected function getStats(): array
     {
         $currentMonth = Borrow::whereMonth('created_at', '=', now()->month)->count();

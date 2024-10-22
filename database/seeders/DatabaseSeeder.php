@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
     {
 
         // User::factory(10)->create();
-
+        $this->call(ShieldSeeder::class);
         User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@mail.com',
             'password' => bcrypt('admin'),
-            'role' => 'admin',
         ]);
+
     }
 }

@@ -24,7 +24,7 @@ class BorrowResource extends Resource
 {
     protected static ?string $model = Borrow::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-down-on-square-stack';
 
     protected static ?string $buttonLabel = 'Borrow';
 
@@ -91,7 +91,9 @@ class BorrowResource extends Resource
                         });
                     })
                     ->requiresConfirmation()
-                    ->visible(fn (Borrow $record) => $record->itemBorrows()->where('borrow_state', 'active')->exists()),
+                    ->visible(fn (Borrow $record) => auth()->user()->hasRole('super_admin') &&
+        $record->itemBorrows()->where('borrow_state', 'active')->exists()
+                    ),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
             ])

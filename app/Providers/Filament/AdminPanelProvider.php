@@ -28,7 +28,6 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->brandLogo(asset('images/logo_smk.png'))
             ->brandLogoHeight('100px')
-            ->topNavigation()
             ->default()
             ->id('dashboard')
             ->path('/dashboard')
@@ -36,12 +35,11 @@ class AdminPanelProvider extends PanelProvider
             ->profile()
             ->registration()
             ->passwordReset()
+            ->topbar(true)
             ->emailVerification()
             ->colors([
                 'primary' => Color::Blue,
             ])
-            ->sidebarCollapsibleOnDesktop()
-            ->sidebarFullyCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -55,9 +53,18 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('Items'),
+                    ->label('Borrows')
+                    ->icon('heroicon-o-queue-list'),
                 NavigationGroup::make()
-                    ->label('Users'),
+                    ->label('Filament Shield'),
+                NavigationGroup::make()
+                    ->label('Items')
+                    ->icon('heroicon-o-rectangle-stack')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Users')
+                    ->icon('heroicon-o-users')
+                    ->collapsed(),
 
             ])
             ->middleware([
