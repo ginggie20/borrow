@@ -77,4 +77,8 @@ Login using the following credentials:
 "Password: admin"
 ```
 
+# Run Email Verification
 
+```bash
+php artisan queue:work
+```
