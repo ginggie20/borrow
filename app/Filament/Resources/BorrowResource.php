@@ -19,6 +19,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\DB;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use Filament\Tables\Columns\BadgeColumn;
+
 
 class BorrowResource extends Resource
 {
@@ -37,7 +39,6 @@ class BorrowResource extends Resource
                     ->disabled()
                     ->dehydrated(),
                 DatePicker::make('borrow_start')
-                    ->format('d M Y')
                     ->default(now()),
                 Select::make('item_id')
                     ->multiple()
@@ -67,6 +68,15 @@ class BorrowResource extends Resource
                     ->formatStateUsing(function ($state, Borrow $record) {
                         return $record->items->pluck('item_code')->implode(', ');
                     }),
+                TextColumn::make('itemBorrows.borrow_state')
+                ->badge()
+                ->colors([
+                    'info' => 'pending',
+                    'success' => 'active',  
+                    'primary' => 'finish',
+                    'danger' => 'declined',
+                ])
+                ->label('Status'),
                 TextColumn::make('borrow_start')
                     ->date('d M Y'),
                 TextColumn::make('borrow_finish')
@@ -76,6 +86,11 @@ class BorrowResource extends Resource
             ->filters([
                 //
             ])
+            ->modifyQueryUsing(function ($query){
+                if (auth()->user()->hasRole('siswa')){
+                    return $query->where('borrow_name',auth()->user()->name);
+                }
+            })
             ->actions([
                 Action::make('finish')
                     ->label('Finish Borrow')

@@ -42,9 +42,11 @@ class ItemResource extends Resource
             ->columns([
                 TextColumn::make('item_code'),
                 TextColumn::make('CategoryItem.category_name')
-                    ->label('Category'),
+                    ->label('Category')
+                    ->searchable(),
                 TextColumn::make('item_name')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('item_state'),
             ])
             ->filters([

@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Resources\BorrowResource\Widgets\CurrentMonthBorrowsWidget;
 use App\Filament\Resources\ItemResource\Widgets\AvailableItemsWidget;
+use App\Filament\Widgets\CurrentActiveBorrowsWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -27,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->brandLogo(asset('images/logo_smk.png'))
+            ->favicon(asset('images/logo_smk.png'))
             ->brandLogoHeight('100px')
             ->default()
             ->id('dashboard')
@@ -38,7 +40,8 @@ class AdminPanelProvider extends PanelProvider
             ->topbar(true)
             ->emailVerification()
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::hex('#2c3262'),
+                'secondary' => Color::hex('#f4a60c'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -48,7 +51,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                CurrentMonthBorrowsWidget::class,
+                // CurrentMonthBorrowsWidget::class,
+                CurrentActiveBorrowsWidget::class,
                 AvailableItemsWidget::class,
             ])
             ->navigationGroups([

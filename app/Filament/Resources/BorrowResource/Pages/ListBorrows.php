@@ -6,6 +6,7 @@ use App\Filament\Resources\BorrowResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Pages\ListRecords\Tab;
+use Illuminate\Support\Facades\Auth;
 
 class ListBorrows extends ListRecords
 {
@@ -17,6 +18,8 @@ class ListBorrows extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+
 
     public function getTabs(): array
     {
