@@ -9,14 +9,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 
-class AvailableItemsWidget extends BaseWidget
+class AvailableItemsWidget2 extends BaseWidget
 {
     protected int|string|array $columnSpan = '2';
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(fn () => Item::where('item_state', 'available' && 'category_item_id', '1'))
+            ->query(fn () => Item::where('item_state', 'available' && 'category_item_id', '2'))
             ->columns([
                 Tables\Columns\TextColumn::make('CategoryItem.category_name')
                     ->label('Category')

@@ -21,7 +21,7 @@ class VerifyListener
     public function handle(Verified $event): void
     {
         $user = $event->user;
-        $role = Role::where('name', 'siswa')->first();
+        $role = Role::where('name', 'User')->first();
         $user->assignRole($role);
     }
 }

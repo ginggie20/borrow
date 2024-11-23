@@ -19,8 +19,6 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\DB;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
-use Filament\Tables\Columns\BadgeColumn;
-
 
 class BorrowResource extends Resource
 {
@@ -69,14 +67,14 @@ class BorrowResource extends Resource
                         return $record->items->pluck('item_code')->implode(', ');
                     }),
                 TextColumn::make('itemBorrows.borrow_state')
-                ->badge()
-                ->colors([
-                    'info' => 'pending',
-                    'success' => 'active',  
-                    'primary' => 'finish',
-                    'danger' => 'declined',
-                ])
-                ->label('Status'),
+                    ->badge()
+                    ->colors([
+                        'info' => 'pending',
+                        'success' => 'active',
+                        'primary' => 'finish',
+                        'danger' => 'declined',
+                    ])
+                    ->label('Status'),
                 TextColumn::make('borrow_start')
                     ->date('d M Y'),
                 TextColumn::make('borrow_finish')
@@ -86,9 +84,9 @@ class BorrowResource extends Resource
             ->filters([
                 //
             ])
-            ->modifyQueryUsing(function ($query){
-                if (auth()->user()->hasRole('siswa')){
-                    return $query->where('borrow_name',auth()->user()->name);
+            ->modifyQueryUsing(function ($query) {
+                if (auth()->user()->hasRole('user')) {
+                    return $query->where('borrow_name', auth()->user()->name);
                 }
             })
             ->actions([

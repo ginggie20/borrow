@@ -13,7 +13,6 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -30,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('images/logo_smk.png'))
             ->favicon(asset('images/logo_smk.png'))
             ->brandLogoHeight('100px')
+            ->sidebarCollapsibleOnDesktop()
             ->default()
             ->id('dashboard')
             ->path('/dashboard')
@@ -50,24 +50,22 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
                 // CurrentMonthBorrowsWidget::class,
                 CurrentActiveBorrowsWidget::class,
                 AvailableItemsWidget::class,
             ])
             ->navigationGroups([
-                NavigationGroup::make()
+                NavigationGroup::make('borrow')
                     ->label('Borrows')
                     ->icon('heroicon-o-queue-list'),
-                NavigationGroup::make()
+                NavigationGroup::make('filament_shield')
                     ->label('Filament Shield'),
-                NavigationGroup::make()
+                NavigationGroup::make('items')
                     ->label('Items')
                     ->icon('heroicon-o-rectangle-stack')
                     ->collapsed(),
-                NavigationGroup::make()
+                NavigationGroup::make('users')
                     ->label('Users')
-                    ->icon('heroicon-o-users')
                     ->collapsed(),
 
             ])

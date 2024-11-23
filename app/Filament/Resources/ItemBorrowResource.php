@@ -14,6 +14,8 @@ class ItemBorrowResource extends Resource
 {
     protected static ?string $model = ItemBorrow::class;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $navigationGroup = 'Items';
 
     public static function form(Form $form): Form
